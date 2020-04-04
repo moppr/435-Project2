@@ -1,4 +1,8 @@
 import random
+from node import Node
 
 if __name__ == "__main__":
-    print(random.randint(0, 50))
+    n = Node(5)
+    n2 = Node(5)
+    print(hash(n))
+    print(hash(n2))

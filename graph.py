@@ -8,6 +8,13 @@ class Graph:
         """Init with blank adjacency list as dictionary."""
         self.adjacency_list = {}
 
+    def __str__(self):
+        """Return adjacency list to represent graph as a string."""
+        result = ""
+        for node in sorted(self.get_all_nodes()):
+            result += f"{str(node)}: {str([str(other) for other in self.adjacency_list[node]])}\n"
+        return result[:-1]
+
     def add_node(self, value):
         """Create new node with specified value and add to adjacency list."""
         self.adjacency_list[Node(value)] = set()
