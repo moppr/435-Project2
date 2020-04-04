@@ -12,12 +12,13 @@ class Graph:
         """Return adjacency list to represent graph as a string."""
         result = ""
         for node in sorted(self.get_all_nodes()):
-            result += f"{str(node)}: {str([str(other) for other in self.adjacency_list[node]])}\n"
+            result += f"{str(node)}\n"
         return result[:-1]
 
     def add_node(self, value):
         """Create new node with specified value and add to adjacency list."""
-        self.adjacency_list[Node(value)] = set()
+        node = Node(value)
+        self.adjacency_list[node] = node
 
     def add_undirected_edge(self, first, second):
         """Create adjacency between nodes first and second, provided they exist."""
