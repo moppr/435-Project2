@@ -1,5 +1,6 @@
 from graph import Graph
 from node import Node
+from graph_search import GraphSearch
 import random
 
 
@@ -42,6 +43,15 @@ def create_linked_list(n):
 if __name__ == "__main__":
     random_unweighted_graph = create_random_unweighted_graph_iter(10)
     print(random_unweighted_graph, "\n")
-    linked_list = create_linked_list(10)
-    print(linked_list)
+    '''linked_list = create_linked_list(10)
+    print(linked_list, "\n")'''
 
+    node1 = random_unweighted_graph.get_node(3)
+    node2 = random_unweighted_graph.get_node(5)
+    gs = GraphSearch()
+    result = gs.dfs_rec(node1, node2)
+    print([n.value for n in result] if result else None)
+    result = gs.dfs_iter(node1, node2)
+    print([n.value for n in result] if result else None)
+    result = gs.bft_rec(random_unweighted_graph)
+    print([n.value for n in result])
