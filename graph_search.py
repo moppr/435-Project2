@@ -35,11 +35,11 @@ class GraphSearch:
 
     @staticmethod
     def bft_rec(graph):
-        # TODO: account for graph not being connected, double check algorithm
         all_nodes = graph.get_all_nodes()
         start = all_nodes.pop()
         queue = deque()
         queue.append(start)
+        visited = [start]
 
         def bft_rec_helper(queue, visited):
             if not queue:
@@ -49,9 +49,40 @@ class GraphSearch:
 
             for other in node.edges:
                 if other not in visited:
+                    all_nodes.remove(other)
                     queue.append(other)
                     visited.append(other)
 
+            # Disconnect in the graph (queue empty but unvisited nodes exist).
+            if all_nodes and not queue:
+                next = all_nodes.pop()
+                queue.append(next)
+                visited.append(next)
+
             return bft_rec_helper(queue, visited)
 
-        return bft_rec_helper(queue, [start])
+        return bft_rec_helper(queue, visited)
+
+    @staticmethod
+    def bft_iter(graph):
+        all_nodes = graph.get_all_nodes()
+        start = all_nodes.pop()
+        queue = deque()
+        queue.append(start)
+        visited = [start]
+
+        while queue:
+            node = queue.popleft()
+            for other in node.edges:
+                if other not in visited:
+                    all_nodes.remove(other)
+                    queue.append(other)
+                    visited.append(other)
+
+            # Disconnect in the graph (queue empty but unvisited nodes exist).
+            if all_nodes and not queue:
+                next = all_nodes.pop()
+                queue.append(next)
+                visited.append(next)
+
+        return visited

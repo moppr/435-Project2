@@ -15,6 +15,9 @@ class Graph:
 
     def add_node(self, value):
         node = Node(value)
+        # Mapping node objects to themselves seems odd, but is done to be able to
+        # access the node object (which contains the adjacency list) in constant
+        # time while only knowing its value.
         self.adjacency_list[node] = node
 
     def add_undirected_edge(self, first, second):
