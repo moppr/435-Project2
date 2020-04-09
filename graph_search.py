@@ -1,9 +1,11 @@
+from collections import deque
+
+
 class GraphSearch:
     """Recursive and iterative implementations of Depth first and Breadth first searches."""
 
     @staticmethod
     def dfs_rec(start, end, visited=None):
-        """Return a depth-first search path implemented recursively"""
         if not visited:
             visited = []
 
@@ -17,7 +19,6 @@ class GraphSearch:
 
     @staticmethod
     def dfs_iter(start, end):
-        """Return a depth-first search path implemented iteratively"""
         stack = [start]
         visited = []
 
@@ -27,20 +28,24 @@ class GraphSearch:
                 visited.append(node)
             if node == end:
                 return visited
-            # reversing causes the stack to behave identically to the recursive implementation
+            # Reversing causes the stack to behave identically to the recursive implementation.
             for other in reversed(list(node.edges)):
                 if other not in visited:
                     stack.append(other)
 
     @staticmethod
     def bft_rec(graph):
-
         # TODO: account for graph not being connected, double check algorithm
+        all_nodes = graph.get_all_nodes()
+        start = all_nodes.pop()
+        queue = deque()
+        queue.append(start)
 
         def bft_rec_helper(queue, visited):
             if not queue:
                 return visited
-            node = queue.pop()
+
+            node = queue.popleft()
 
             for other in node.edges:
                 if other not in visited:
@@ -49,7 +54,4 @@ class GraphSearch:
 
             return bft_rec_helper(queue, visited)
 
-        # arbitrary starting point
-        start = graph.get_node(0)
-
-        return bft_rec_helper([start], [start])
+        return bft_rec_helper(queue, [start])
