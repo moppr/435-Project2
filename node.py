@@ -10,9 +10,8 @@ class Node:
         self.edges = set()
 
     def __str__(self):
-        # Unlike graph.__str__(), edges is not being sorted because the
-        # order of edge generation is necessary to understand the trace of how
-        # searches and traversals generate their outputs.
+        # Unlike graph.__str__(), edges is not being sorted because the order of edge generation is
+        # necessary to understand the trace of how searches and traversals generate their outputs.
         return f"{self.value}: {[node.value for node in self.edges]}"
 
     def __eq__(self, other):

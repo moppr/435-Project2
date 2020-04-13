@@ -37,7 +37,8 @@ def create_linked_list(num_nodes):
 
 
 def list_print(lst):
-    return [item.value for item in lst] if lst else None
+    if lst:
+        return [item.value for item in lst]
 
 
 def bft_rec_linked_list(graph):
