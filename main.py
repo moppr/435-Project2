@@ -4,7 +4,7 @@ from graph_search import GraphSearch
 import random
 
 
-def create_random_unweighted_graph_iter(num_nodes, connectivity):
+def create_random_unweighted_graph_iter(num_nodes, connectivity=.5):
     graph = Graph()
     for number in random.sample(range(num_nodes), num_nodes):
         graph.add_node(number)
@@ -12,7 +12,7 @@ def create_random_unweighted_graph_iter(num_nodes, connectivity):
     nodes = graph.get_all_nodes()
 
     for node in nodes:
-        # Choose up to half of the other nodes to connect to.
+        # Choose a ratio of up to connectivity of the other nodes to connect to.
         num_edges = int(random.random() * connectivity * len(nodes))
         for other in random.sample(nodes, num_edges):
             graph.add_undirected_edge(node, other)
@@ -21,9 +21,8 @@ def create_random_unweighted_graph_iter(num_nodes, connectivity):
 
 
 def create_linked_list(num_nodes):
-    # The prompt implies that this is a directed linked list, but discussion
-    # on Slack has suggested that undirected is preferred to be consistent with part a,
-    # so undirected is implemented here.
+    # The prompt implies that this is a directed linked list, but discussion on Slack has suggested
+    # that undirected is preferred to be consistent with part a, so undirected is implemented here.
     graph = Graph()
     for number in range(num_nodes):
         graph.add_node(number)

@@ -21,8 +21,8 @@ class Node:
         return self.value < other.value
 
     def __hash__(self):
-        # Since __eq__ was defined, this is necessary to store Node objects
-        # as keys in the dictionary being used to represent the adjacency list.
+        # Since __eq__ was defined, __hash__ is necessary to store Node objects
+        # in the set being used to represent the adjacency list.
         return hash(self.value)
 
     def add(self, other):

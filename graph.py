@@ -10,7 +10,6 @@ class Graph:
     def __str__(self):
         result = ""
         for node in sorted(self.get_all_nodes()):
-            print('e', node)
             result += f"{str(node)}\n"
         return result[:-1]
 
