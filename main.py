@@ -14,9 +14,7 @@ def create_random_graph_iter(num_nodes, connectivity, mode):
     for number in random.sample(range(num_nodes), num_nodes):
         graph.add_node(number)
 
-    nodes = graph.get_all_nodes()
-
-    for node in nodes:
+    for node in (nodes := graph.get_all_nodes()):
         # Choose a ratio of up to connectivity of the other nodes to connect to.
         num_edges = int(random.random() * connectivity * len(nodes))
         for other in random.sample(nodes, num_edges):
@@ -32,7 +30,7 @@ def create_random_unweighted_graph_iter(num_nodes, connectivity=.5):
     return create_random_graph_iter(num_nodes, connectivity, "unweighted")
 
 
-def create_random_dag_iter(num_nodes, connectivity=.5):
+def create_random_dag_iter(num_nodes, connectivity=.67):
     return create_random_graph_iter(num_nodes, connectivity, "dag")
 
 

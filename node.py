@@ -1,4 +1,5 @@
 from functools import *
+from graph_search import GraphSearch
 
 
 @total_ordering
@@ -8,6 +9,9 @@ class Node:
     def __init__(self, value):
         self.value = value
         self.edges = set()
+        # Nodes don't actually connect to themselves but marking them as such prevents
+        # these false connections from happening later on.
+        self.incoming_connections = {self}
 
     def __str__(self):
         # Unlike graph.__str__(), edges is not being sorted because the order of edge generation is
@@ -29,4 +33,18 @@ class Node:
         self.edges.add(other)
 
     def remove(self, other):
-        self.edges.remove(other)
+        if other in self.edges:
+            self.edges.remove(other)
+
+    def add_connections(self, incoming):
+        self.incoming_connections.update(incoming.incoming_connections)
+        for other in self.edges:
+            other.add_connections(self)  # Using self is the same as using incoming, theoretically.
+
+    def remove_connections(self, incoming):
+        for other in incoming.incoming_connections:  # Members are guaranteed to be in self's incoming.
+            # Not the most efficient thing in the world, but I couldn't find a better way of determining
+            # if a given connection should be removed or not because I'm not tracking the source(s) of
+            # each individual connection, and only one source is being removed at a time.
+            if not (search := GraphSearch.dfs_iter(other, self)):
+                self.incoming_connections.remove(other)

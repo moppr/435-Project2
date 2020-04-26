@@ -8,9 +8,12 @@ class DirectedGraph(Graph):
         if first == second:
             return
 
-        first.add(second)
+        if second not in first.incoming_connections:
+            first.add(second)
+            second.add_connections(first)
 
     def remove_directed_edge(self, first, second):
         self._check_node_validity((first, second))
 
         first.remove(second)
+        second.remove_connections(first)
