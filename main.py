@@ -1,11 +1,16 @@
 from graph import Graph
+from directedgraph import DirectedGraph
 from node import Node
 from graph_search import GraphSearch
 import random
 
 
-def create_random_unweighted_graph_iter(num_nodes, connectivity=.5):
-    graph = Graph()
+def create_random_graph_iter(num_nodes, connectivity, mode):
+    if mode == "unweighted":
+        graph = Graph()
+    elif mode == "dag":
+        graph = DirectedGraph()
+
     for number in random.sample(range(num_nodes), num_nodes):
         graph.add_node(number)
 
@@ -15,9 +20,20 @@ def create_random_unweighted_graph_iter(num_nodes, connectivity=.5):
         # Choose a ratio of up to connectivity of the other nodes to connect to.
         num_edges = int(random.random() * connectivity * len(nodes))
         for other in random.sample(nodes, num_edges):
-            graph.add_undirected_edge(node, other)
+            if mode == "unweighted":
+                graph.add_undirected_edge(node, other)
+            elif mode == "dag":
+                graph.add_directed_edge(node, other)
 
     return graph
+
+
+def create_random_unweighted_graph_iter(num_nodes, connectivity=.5):
+    return create_random_graph_iter(num_nodes, connectivity, "unweighted")
+
+
+def create_random_dag_iter(num_nodes, connectivity=.5):
+    return create_random_graph_iter(num_nodes, connectivity, "dag")
 
 
 def create_linked_list(num_nodes):
