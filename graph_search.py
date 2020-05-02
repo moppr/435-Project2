@@ -1,4 +1,5 @@
 from collections import deque
+from graph import Graph
 
 
 class GraphSearch:
@@ -7,20 +8,29 @@ class GraphSearch:
     # "visited" for the following four methods implemented as a list and not a set
     # to preserve order and allow manual tracing of each method.
     @staticmethod
-    def dfs_rec(start, end, visited=None):
+    def dfs_rec(start, end=None, visited=None):
+        if isinstance(start, Graph):
+            start = start.get_all_nodes().pop()
+
         if not visited:
             visited = []
 
         if start not in visited:
             visited.append(start)
-            if start == end:
+            if end and start == end:
                 return True
             for other in start.edges:
                 if GraphSearch.dfs_rec(other, end, visited):
                     return visited
 
+        if not end:
+            return visited
+
     @staticmethod
-    def dfs_iter(start, end):
+    def dfs_iter(start, end=None):
+        if isinstance(start, Graph):
+            start = start.get_all_nodes().pop()
+
         stack = [start]
         visited = []
 
@@ -28,12 +38,15 @@ class GraphSearch:
             node = stack.pop()
             if node not in visited:
                 visited.append(node)
-            if node == end:
+            if end and node == end:
                 return visited
             # Reversing causes the stack to behave identically to the recursive implementation.
             for other in reversed(list(node.edges)):
                 if other not in visited:
                     stack.append(other)
+
+        if not end:
+            return visited
 
     @staticmethod
     def bft_rec(graph):
@@ -89,6 +102,7 @@ class GraphSearch:
 
         return visited
 
+    # Algorithm loosely adapted from https://stackoverflow.com/questions/20555291
     @staticmethod
     def cut_cycles(graph):
         # TODO: Implement iteratively
@@ -121,16 +135,21 @@ class GraphSearch:
         # TODO: Implement iteratively
         nodes = graph.get_all_nodes()
         visited = set()
+        checked = set()
 
         def is_cyclic(node):
-            if node in visited:
-                return True
             visited.add(node)
             for other in node.edges:
-                if is_cyclic(other):
+                if other in checked:
+                    continue
+                elif other in visited:
+                    return True
+                elif is_cyclic(other):
                     return True
             visited.remove(node)
+            checked.add(node)
 
-        for node in nodes:
-            if is_cyclic(node):
+        while nodes:
+            if is_cyclic(nodes.pop()):
                 raise RuntimeError(f"Graph was still not cyclic after cycle removal\n{graph}")
+            nodes -= checked

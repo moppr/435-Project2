@@ -5,7 +5,7 @@ from main import *
 import random
 
 if __name__ == "__main__":
-    random_dag = create_random_dag_iter(10, 1)
+    random_dag = create_random_dag_iter(10, .1)
     print(random_dag)
     nodes = random_dag.get_all_nodes()
     while (node1 := nodes.pop()) and not node1.edges:

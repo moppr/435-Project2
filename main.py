@@ -2,6 +2,8 @@ from graph import Graph
 from directedgraph import DirectedGraph
 from node import Node
 from graph_search import GraphSearch
+from topsort import TopSort
+from datetime import *
 import random
 
 
@@ -66,9 +68,16 @@ def bft_iter_linked_list(graph):
     print("bft_iter:", list_print(GraphSearch.bft_iter(graph)))
 
 
+def mdfs_iter_random_dag(graph):
+    print("mdfs:", list_print(TopSort.mdfs(graph)))
+
+
 if __name__ == "__main__":
     large_linked_list = create_linked_list(10000)
     small_linked_list = create_linked_list(100)
+    now = datetime.now()
+    random_dag = create_random_dag_iter(1000)
+    print("time to create a random dag:", datetime.now() - now)
 
     try:
         bft_rec_linked_list(large_linked_list)
@@ -77,3 +86,5 @@ if __name__ == "__main__":
         bft_rec_linked_list(small_linked_list)
 
     bft_iter_linked_list(large_linked_list)
+
+    mdfs_iter_random_dag(random_dag)
