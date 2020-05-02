@@ -4,6 +4,8 @@ from collections import deque
 class GraphSearch:
     """Recursive and iterative implementations of Depth first and Breadth first searches."""
 
+    # "visited" for the following four methods implemented as a list and not a set
+    # to preserve order and allow manual tracing of each method.
     @staticmethod
     def dfs_rec(start, end, visited=None):
         if not visited:
@@ -86,3 +88,49 @@ class GraphSearch:
                 visited.append(next)
 
         return visited
+
+    @staticmethod
+    def cut_cycles(graph):
+        # TODO: Implement iteratively
+        nodes = graph.get_all_nodes()
+        visited = set()
+        checked = set()
+
+        def cut_cycles(node):
+            visited.add(node)
+            for other in node.edges.copy():
+                if other in checked:
+                    continue
+                elif other in visited:
+                    graph.remove_directed_edge(node, other)
+                else:
+                    cut_cycles(other)
+            visited.remove(node)
+            checked.add(node)
+
+        while nodes:
+            cut_cycles(nodes.pop())
+            nodes -= checked
+
+        GraphSearch._verify_no_cycles(graph)
+
+        return graph
+
+    @staticmethod
+    def _verify_no_cycles(graph):
+        # TODO: Implement iteratively
+        nodes = graph.get_all_nodes()
+        visited = set()
+
+        def is_cyclic(node):
+            if node in visited:
+                return True
+            visited.add(node)
+            for other in node.edges:
+                if is_cyclic(other):
+                    return True
+            visited.remove(node)
+
+        for node in nodes:
+            if is_cyclic(node):
+                raise RuntimeError(f"Graph was still not cyclic after cycle removal\n{graph}")

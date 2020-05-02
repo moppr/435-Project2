@@ -6,6 +6,10 @@ import random
 
 
 def create_random_graph_iter(num_nodes, connectivity, graph):
+    if connectivity > 1:
+        raise ValueError(f"Cannot attempt to connect to more than every other node "
+                         f"(Connectivity of {connectivity} was greater than 1)")
+
     if isinstance(graph, DirectedGraph):
         mode = "dag"
     else:
@@ -30,9 +34,8 @@ def create_random_unweighted_graph_iter(num_nodes, connectivity=.5):
     return create_random_graph_iter(num_nodes, connectivity, Graph())
 
 
-def create_random_dag_iter(num_nodes, connectivity=.67):
-    # TODO: Cut cycles
-    return create_random_graph_iter(num_nodes, connectivity, DirectedGraph())
+def create_random_dag_iter(num_nodes, connectivity=.75):
+    return GraphSearch.cut_cycles(create_random_graph_iter(num_nodes, connectivity, DirectedGraph()))
 
 
 def create_linked_list(num_nodes):
