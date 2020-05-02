@@ -5,11 +5,11 @@ from graph_search import GraphSearch
 import random
 
 
-def create_random_graph_iter(num_nodes, connectivity, mode):
-    if mode == "unweighted":
-        graph = Graph()
-    elif mode == "dag":
-        graph = DirectedGraph()
+def create_random_graph_iter(num_nodes, connectivity, graph):
+    if isinstance(graph, DirectedGraph):
+        mode = "dag"
+    else:
+        mode = "unweighted"
 
     for number in random.sample(range(num_nodes), num_nodes):
         graph.add_node(number)
@@ -27,11 +27,12 @@ def create_random_graph_iter(num_nodes, connectivity, mode):
 
 
 def create_random_unweighted_graph_iter(num_nodes, connectivity=.5):
-    return create_random_graph_iter(num_nodes, connectivity, "unweighted")
+    return create_random_graph_iter(num_nodes, connectivity, Graph())
 
 
 def create_random_dag_iter(num_nodes, connectivity=.67):
-    return create_random_graph_iter(num_nodes, connectivity, "dag")
+    # TODO: Cut cycles
+    return create_random_graph_iter(num_nodes, connectivity, DirectedGraph())
 
 
 def create_linked_list(num_nodes):
