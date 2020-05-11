@@ -5,6 +5,10 @@ from graph_search import GraphSearch
 from topsort import TopSort
 from datetime import *
 import random
+import sys
+
+
+sys.setrecursionlimit(2048)
 
 
 def create_random_graph_iter(num_nodes, connectivity, graph):
@@ -72,12 +76,14 @@ def mdfs_iter_random_dag(graph):
     print("mdfs:", list_print(TopSort.mdfs(graph)))
 
 
+def kahns_iter_random_dag(graph):
+    print("kahns:", list_print(TopSort.kahns(graph)))
+
+
 if __name__ == "__main__":
     large_linked_list = create_linked_list(10000)
     small_linked_list = create_linked_list(100)
-    now = datetime.now()
     random_dag = create_random_dag_iter(1000)
-    print("time to create a random dag:", datetime.now() - now)
 
     try:
         bft_rec_linked_list(large_linked_list)
@@ -88,3 +94,5 @@ if __name__ == "__main__":
     bft_iter_linked_list(large_linked_list)
 
     mdfs_iter_random_dag(random_dag)
+
+    kahns_iter_random_dag(random_dag)
