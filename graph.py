@@ -5,7 +5,7 @@ class Graph:
     """Undirected unweighted graph implementation using an adjacency list."""
 
     def __init__(self):
-        self.adjacency_list = set()
+        self.adjacency_list = {}
 
     def __str__(self):
         result = ""
@@ -14,7 +14,8 @@ class Graph:
         return result[:-1]
 
     def add_node(self, value):
-        self.adjacency_list.add(Node(value))
+        node = Node(value)
+        self.adjacency_list[node] = node
 
     def add_undirected_edge(self, first, second):
         self._check_node_validity((first, second))
@@ -32,7 +33,10 @@ class Graph:
         second.remove(first)
 
     def get_all_nodes(self):
-        return self.adjacency_list.copy()
+        return set(self.adjacency_list)
+
+    def get_node(self, value):
+        return self.adjacency_list[Node(value)]
 
     def _check_node_validity(self, nodes):
         for node in nodes:

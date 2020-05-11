@@ -6,9 +6,13 @@ import random
 
 if __name__ == "__main__":
     sys.setrecursionlimit(256)
-    for _ in range(10):
-        random_dag = create_random_dag_iter(8)
-        print(random_dag)
-        mdfs_iter_random_dag(random_dag)
-        kahns_iter_random_dag(random_dag)
-        print()
+    for _ in range(0):
+        random_weighted = create_random_complete_weighted_graph(10)
+        print(random_weighted, "\n")
+        linked_weighted = create_linked_list(10, True)
+        print(linked_weighted, "\n")
+
+    l = create_random_complete_weighted_graph(10)
+    r = create_linked_list(10, True)
+    print(l)
+    dijkstras_random_weighted(l)

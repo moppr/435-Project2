@@ -2,6 +2,7 @@ from collections import deque
 
 
 class TopSort:
+    """Iterative implementations of Kahn's algorithm and Modified DFS algorithm."""
 
     @staticmethod
     def kahns(graph):
