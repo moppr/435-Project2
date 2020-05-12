@@ -36,6 +36,8 @@ class Graph:
         return set(self.adjacency_list)
 
     def get_node(self, value):
+        if isinstance(value, Node):
+            return self.adjacency_list[value]
         return self.adjacency_list[Node(value)]
 
     def _check_node_validity(self, nodes):

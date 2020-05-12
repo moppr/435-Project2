@@ -6,13 +6,8 @@ import random
 
 if __name__ == "__main__":
     sys.setrecursionlimit(256)
-    for _ in range(0):
-        random_weighted = create_random_complete_weighted_graph(10)
-        print(random_weighted, "\n")
-        linked_weighted = create_linked_list(10, True)
-        print(linked_weighted, "\n")
-
-    l = create_random_complete_weighted_graph(10)
-    r = create_linked_list(10, True)
-    print(l)
-    dijkstras_random_weighted(l)
+    n = 3
+    random_grid = create_random_grid_graph(n)
+    source, dest = random_grid.get_node(GridNode(0, 0)), random_grid.get_node(GridNode(n-1, n-1))
+    a_star_random(random_grid, source, dest)
+    print(random_grid)
