@@ -1,6 +1,6 @@
 from node import Node
 from graph import Graph
-from graph_search import GraphSearch
+from graphsearch import GraphSearch
 from main import *
 import random
 

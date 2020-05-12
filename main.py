@@ -4,7 +4,7 @@ from weightedgraph import WeightedGraph
 from gridgraph import GridGraph
 from node import Node
 from gridnode import GridNode
-from graph_search import GraphSearch
+from graphsearch import GraphSearch
 from topsort import TopSort
 from datetime import *
 import random
